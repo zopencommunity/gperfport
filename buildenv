@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+# Set up environment variables for general build tool to operate
+# This buildenv is a sample. It describes the minimal environment
+# variables required to set up a port environment.
+# Alternate environment configurations of the name setenv_<variant>.sh
+# are also available for reading.
+# These examples are also used as a testbed for build.sh itself
+#
+#
+# The ZOPEN_TYPE is required. This indicates whether the Open-Source
+# package contents are stored in a 'git' format or a 'tarball' format.
+# At some point, other formats (perhaps pax) may be supported
+# For this example, we are specifying that we will use a zipped tarball format
+# for our build.
+#
+export ZOPEN_TYPE="TARBALL"
+
+#
+# Given the ZOPEN_TYPE, build.sh will then need to know where to download from,
+# and what other software is required to be able to build this code.
+# Since a TARBALL was selected, the environment variables
+# ZOPEN_TARBALL_URL and ZOPEN_TARBALL_DEPS are required to be specified.
+# The ZOPEN_TARBALL_URL is the fully-qualified location of the tar.gz format of
+# tarball, or the tar.xz format of tarball.
+# The ZOPEN_TARBALL_DEPS lists each of the ported tools that are required to be
+# able to build the code. In the simplest case, this will include:
+#  - curl: required to be able to download the tarball
+#  - gz or xz: required to be able to unzip the tarball
+#  - git: required by build.sh to be able to apply patches
+# Many packages will require basic tools like m4, make.
+#
+export ZOPEN_TARBALL_URL="http://mirror.rit.edu/gnu/gperf/gperf-3.1.tar.gz"
+export ZOPEN_TARBALL_DEPS="curl gzip make"
+
+export ZOPEN_EXTRA_CXXFLAGS="-I. -I../lib"
+# export CXX=xlclang++
+
+
+zopen_check_results()
+{
+#!/bin/sh
+#
+# Really simple check - make sure output log has the right line
+#
+dir="$1"
+pfx="$2"
+chk="$1/$2_check.log"
+
+totalTests=$(grep "Doing.*tests" ${chk} | cut -f2 -d ' ' | tr -d ' ')
+if grep -q 'failed' "${chk}"; then
+    #TODO: handle failure case
+else
+    cat <<ZZ
+actualFailures:0
+totalTests:$totalTests
+expectedFailures:0
+ZZ
+fi
+
+}
+
