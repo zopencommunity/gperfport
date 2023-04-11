@@ -1,6 +1,6 @@
 export ZOPEN_TYPE="TARBALL"
 export ZOPEN_TARBALL_URL="http://mirror.rit.edu/gnu/gperf/gperf-3.1.tar.gz"
-export ZOPEN_TARBALL_DEPS="curl gzip make"
+export ZOPEN_TARBALL_DEPS="curl gzip make zoslib"
 
 export ZOPEN_EXTRA_CXXFLAGS="-I. -I../lib"
 
