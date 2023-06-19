@@ -21,3 +21,7 @@ ZZ
 return 0
 }
 
+zopen_get_version()
+{
+    ./src/gperf -v | head -1 | awk '{print $3}'
+}
