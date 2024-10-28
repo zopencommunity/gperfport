@@ -2,6 +2,7 @@
 GPERF_VERSION="3.1"
 
 export ZOPEN_BUILD_LINE="STABLE"
+export ZOPEN_CATEGORIES="development"
 export ZOPEN_STABLE_URL="http://mirror.rit.edu/gnu/gperf/gperf-${GPERF_VERSION}.tar.gz"
 export ZOPEN_STABLE_DEPS="curl gzip make zoslib"
 
